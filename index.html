@@ -123,38 +123,15 @@ Presiona la pantalla para comenzar ❤️
 </div>
 
 <audio id="musica" loop>
-    <source src="enamorados.mp3" type="audio/mpeg">
+  <source src="enamorados.mp3" type="audio/mpeg">
 </audio>
 
-<canvas id="canvas"></canvas>
-
-<div class="container" id="mainContent">
-
-    <h1>Desde el 14 de febrero de 2013 ❤️</h1>
-
-    <div class="message">
-        A las 6:30 PM tomé la mejor decisión de mi vida.
-        Desde entonces, cada segundo contigo ha sido mi lugar seguro.
-    </div>
-
-    <div class="timer" id="contador"></div>
-
-    <div class="message" style="margin-top:30px;">
-        <strong>
-        Por eso, quiero que hoy lo conmemoramos juntos. ¿Aceptas?
-        </strong>
-    </div>
-
-    <div class="buttons">
-        <button class="si" onclick="aceptar()">Sí</button>
-        <button class="no" id="noBtn">No</button>
-    </div>
-
-</div>
-
-<div class="push" id="push">Error ❌ Debes elegir correctamente 😏</div>
-
 <script>
+document.addEventListener("click", function() {
+  const audio = document.getElementById("musica");
+  audio.play();
+});
+</script>
 
 /* INICIO */
 document.body.addEventListener("click", function(){
