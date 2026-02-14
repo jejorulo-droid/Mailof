@@ -3,224 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuestro Amor ❤️</title>
+<title>Para el Amor de Mi Vida 💖</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-
-body{
-    overflow:hidden;
-    background: radial-gradient(circle at top, #2b0033, #000);
-    color:white;
-    text-align:center;
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
+/* Pantalla inicial */
+#inicio {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
 }
 
-.start-message{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:1.5rem;
-    background:rgba(0,0,0,0.85);
-    padding:20px 30px;
-    border-radius:15px;
-    z-index:10;
+#inicio button {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #ff4d6d;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
-.container{
-    position:relative;
-    top:8vh;
-    padding:20px;
+/* Álbum */
+.scene {
+  width: 90%;
+  max-width: 400px;
+  height: 300px;
+  perspective: 1500px;
+  display: none;
 }
 
-h1{font-size:2.2rem;margin-bottom:15px;}
-
-.message{
-    max-width:700px;
-    margin:auto;
-    line-height:1.6;
-    font-size:1.2rem;
+.album {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.5s;
 }
 
-.timer{
-    margin-top:20px;
-    font-size:1.3rem;
-    font-weight:bold;
-    color:#ff9ae6;
+.scene.abierto .album {
+  transform: rotateY(-180deg);
 }
 
-.buttons{
-    margin-top:40px;
-    position:relative;
-    height:200px;
+.cover, .pages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-button{
-    padding:12px 30px;
-    border:none;
-    border-radius:30px;
-    font-size:1.2rem;
-    cursor:pointer;
-    position:absolute;
-    transition:0.3s;
+.cover {
+  background: #ff4d6d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.si{ background:#ff4da6; left:25%; }
-.no{ background:#444; left:65%; }
-
-.push{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#ff0044;
-    padding:15px 20px;
-    border-radius:10px;
-    display:none;
+.pages {
+  background: white;
+  transform: rotateY(180deg);
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
 }
 
-/* COLLAGE 3x3 */
-.collage{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-top:30px;
-    max-width:900px;
-    margin-left:auto;
-    margin-right:auto;
-    animation:fadeIn 2s ease-in-out;
+.pages img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
 }
 
-.collage img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    border-radius:18px;
-    box-shadow:0 0 25px rgba(255,0,150,0.7);
-    transition:0.4s;
-}
-
-.collage img:hover{
-    transform:scale(1.05);
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(30px);}
-    to{opacity:1; transform:translateY(0);}
+.pages img:hover {
+  transform: scale(1.08);
 }
 </style>
 </head>
+
 <body>
 
-<div class="start-message" id="startMsg">
-Presiona la pantalla para comenzar ❤️
+<!-- Pantalla de inicio -->
+<div id="inicio">
+  <h1>💌 Tengo algo para ti 💌</h1>
+  <button onclick="iniciar()">Toca para abrir 💖</button>
 </div>
 
+<!-- Álbum -->
+<div class="scene" id="albumScene">
+  <div class="album">
+    <div class="cover">
+      Nuestro Álbum 💕
+    </div>
+
+    <div class="pages">
+      <img src="foto1.jpg">
+      <img src="foto2.jpg">
+      <img src="foto3.jpg">
+      <img src="foto4.jpg">
+      <img src="foto5.jpg">
+      <img src="foto6.jpg">
+      <img src="foto7.jpg">
+      <img src="foto8.jpg">
+      <img src="foto9.jpg">
+    </div>
+  </div>
+</div>
+
+<!-- Música -->
 <audio id="musica" loop>
-  <source src="enamorados.mp3" type="audio/mpeg">
+  <source src="Enamorados.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-document.addEventListener("click", function() {
-  const audio = document.getElementById("musica");
-  audio.play();
-});
-</script>
-
-/* INICIO */
-document.body.addEventListener("click", function(){
-    document.getElementById("musica").play();
-    document.getElementById("startMsg").style.display="none";
-},{once:true});
-
-/* CONTADOR */
-const fechaInicio = new Date("2013-02-14T18:30:00");
-setInterval(()=>{
-    const ahora=new Date();
-    const diff=ahora-fechaInicio;
-    const dias=Math.floor(diff/(1000*60*60*24));
-    const horas=Math.floor((diff/(1000*60*60))%24);
-    const minutos=Math.floor((diff/(1000*60))%60);
-    const segundos=Math.floor((diff/1000)%60);
-    document.getElementById("contador").innerHTML=
-    `Han pasado ${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos`;
-},1000);
-
-/* CORAZONES */
-let heartsInterval=setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.innerHTML="❤️";
-    heart.style.position="absolute";
-    heart.style.left=Math.random()*window.innerWidth+"px";
-    heart.style.top=window.innerHeight+"px";
-    heart.style.fontSize=(Math.random()*20+20)+"px";
-    heart.style.transition="4s linear";
-    document.body.appendChild(heart);
-    setTimeout(()=>{heart.style.top="-50px";heart.style.opacity=0;},10);
-    setTimeout(()=>heart.remove(),4000);
-},700);
-
-/* BOTÓN NO */
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",moverNo);
-noBtn.addEventListener("touchstart",moverNo);
-
-function moverNo(){
-    noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
-    noBtn.style.top=Math.random()*(window.innerHeight-120)+"px";
-    document.getElementById("push").style.display="block";
-    setTimeout(()=>document.getElementById("push").style.display="none",2000);
+function iniciar() {
+  document.getElementById("musica").play();
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("albumScene").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("albumScene").classList.add("abierto");
+  }, 300);
 }
-
-/* ACEPTAR */
-function aceptar(){
-
-    clearInterval(heartsInterval);
-
-    document.getElementById("mainContent").innerHTML=`
-        <h1>Tenemos una cita a las 8pm...</h1>
-        <h2 style="margin-top:15px;">Pero nos vamos a las 7pm 💘</h2>
-
-        <div class="collage">
-            <img src="foto1.jpg">
-            <img src="foto2.jpg">
-            <img src="foto3.jpg">
-            <img src="foto4.jpg">
-            <img src="foto5.jpg">
-            <img src="foto6.jpg">
-            <img src="foto7.jpg">
-            <img src="foto8.jpg">
-            <img src="foto9.jpg">
-        </div>
-
-        <h2 style="margin-top:35px;">¡GRACIAS POR ESTOS 13 AÑOS JUNTOS!</h2>
-    `;
-
-    iniciarRosas();
-}
-
-/* ROSAS */
-function iniciarRosas(){
-    setInterval(()=>{
-        const rosa=document.createElement("div");
-        rosa.innerHTML="🌹";
-        rosa.style.position="absolute";
-        rosa.style.left=Math.random()*window.innerWidth+"px";
-        rosa.style.top=window.innerHeight+"px";
-        rosa.style.fontSize=(Math.random()*25+20)+"px";
-        rosa.style.transition="4s linear";
-        document.body.appendChild(rosa);
-        setTimeout(()=>{rosa.style.top="-50px";rosa.style.opacity=0;},10);
-        setTimeout(()=>rosa.remove(),4000);
-    },600);
-}
-
 </script>
 
 </body>
