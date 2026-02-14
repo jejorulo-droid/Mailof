@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Amor ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+    overflow:hidden;
+    background: radial-gradient(circle at top, #2b0033, #000);
+    color:white;
+    text-align:center;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+.start-message{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:1.5rem;
+    background:rgba(0,0,0,0.85);
+    padding:20px 30px;
+    border-radius:15px;
+    z-index:10;
+}
+
+.container{
+    position:relative;
+    top:8vh;
+    padding:20px;
+}
+
+h1{font-size:2.2rem;margin-bottom:15px;}
+
+.message{
+    max-width:700px;
+    margin:auto;
+    line-height:1.6;
+    font-size:1.2rem;
+}
+
+.timer{
+    margin-top:20px;
+    font-size:1.3rem;
+    font-weight:bold;
+    color:#ff9ae6;
+}
+
+.buttons{
+    margin-top:40px;
+    position:relative;
+    height:200px;
+}
+
+button{
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    font-size:1.2rem;
+    cursor:pointer;
+    position:absolute;
+    transition:0.3s;
+}
+
+.si{ background:#ff4da6; left:25%; }
+.no{ background:#444; left:65%; }
+
+.push{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#ff0044;
+    padding:15px 20px;
+    border-radius:10px;
+    display:none;
+}
+
+/* COLLAGE 3x3 */
+.collage{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:30px;
+    max-width:900px;
+    margin-left:auto;
+    margin-right:auto;
+    animation:fadeIn 2s ease-in-out;
+}
+
+.collage img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:18px;
+    box-shadow:0 0 25px rgba(255,0,150,0.7);
+    transition:0.4s;
+}
+
+.collage img:hover{
+    transform:scale(1.05);
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<div class="start-message" id="startMsg">
+Presiona la pantalla para comenzar ❤️
+</div>
+
+<audio id="musica" loop>
+    <source src="enamorados.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="canvas"></canvas>
+
+<div class="container" id="mainContent">
+
+    <h1>Desde el 14 de febrero de 2013 ❤️</h1>
+
+    <div class="message">
+        A las 6:30 PM tomé la mejor decisión de mi vida.
+        Desde entonces, cada segundo contigo ha sido mi lugar seguro.
+    </div>
+
+    <div class="timer" id="contador"></div>
+
+    <div class="message" style="margin-top:30px;">
+        <strong>
+        Por eso, quiero que hoy lo conmemoramos juntos. ¿Aceptas?
+        </strong>
+    </div>
+
+    <div class="buttons">
+        <button class="si" onclick="aceptar()">Sí</button>
+        <button class="no" id="noBtn">No</button>
+    </div>
+
+</div>
+
+<div class="push" id="push">Error ❌ Debes elegir correctamente 😏</div>
+
+<script>
+
+/* INICIO */
+document.body.addEventListener("click", function(){
+    document.getElementById("musica").play();
+    document.getElementById("startMsg").style.display="none";
+},{once:true});
+
+/* CONTADOR */
+const fechaInicio = new Date("2013-02-14T18:30:00");
+setInterval(()=>{
+    const ahora=new Date();
+    const diff=ahora-fechaInicio;
+    const dias=Math.floor(diff/(1000*60*60*24));
+    const horas=Math.floor((diff/(1000*60*60))%24);
+    const minutos=Math.floor((diff/(1000*60))%60);
+    const segundos=Math.floor((diff/1000)%60);
+    document.getElementById("contador").innerHTML=
+    `Han pasado ${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos`;
+},1000);
+
+/* CORAZONES */
+let heartsInterval=setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.innerHTML="❤️";
+    heart.style.position="absolute";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.top=window.innerHeight+"px";
+    heart.style.fontSize=(Math.random()*20+20)+"px";
+    heart.style.transition="4s linear";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.style.top="-50px";heart.style.opacity=0;},10);
+    setTimeout(()=>heart.remove(),4000);
+},700);
+
+/* BOTÓN NO */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",moverNo);
+noBtn.addEventListener("touchstart",moverNo);
+
+function moverNo(){
+    noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
+    noBtn.style.top=Math.random()*(window.innerHeight-120)+"px";
+    document.getElementById("push").style.display="block";
+    setTimeout(()=>document.getElementById("push").style.display="none",2000);
+}
+
+/* ACEPTAR */
+function aceptar(){
+
+    clearInterval(heartsInterval);
+
+    document.getElementById("mainContent").innerHTML=`
+        <h1>Tenemos una cita a las 8pm...</h1>
+        <h2 style="margin-top:15px;">Pero nos vamos a las 7pm 💘</h2>
+
+        <div class="collage">
+            <img src="foto1.jpg">
+            <img src="foto2.jpg">
+            <img src="foto3.jpg">
+            <img src="foto4.jpg">
+            <img src="foto5.jpg">
+            <img src="foto6.jpg">
+            <img src="foto7.jpg">
+            <img src="foto8.jpg">
+            <img src="foto9.jpg">
+        </div>
+
+        <h2 style="margin-top:35px;">¡GRACIAS POR ESTOS 13 AÑOS JUNTOS!</h2>
+    `;
+
+    iniciarRosas();
+}
+
+/* ROSAS */
+function iniciarRosas(){
+    setInterval(()=>{
+        const rosa=document.createElement("div");
+        rosa.innerHTML="🌹";
+        rosa.style.position="absolute";
+        rosa.style.left=Math.random()*window.innerWidth+"px";
+        rosa.style.top=window.innerHeight+"px";
+        rosa.style.fontSize=(Math.random()*25+20)+"px";
+        rosa.style.transition="4s linear";
+        document.body.appendChild(rosa);
+        setTimeout(()=>{rosa.style.top="-50px";rosa.style.opacity=0;},10);
+        setTimeout(()=>rosa.remove(),4000);
+    },600);
+}
+
+</script>
+
+</body>
+</html>
